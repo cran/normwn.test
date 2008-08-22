@@ -25,7 +25,7 @@ function(x)
  print(MN)
  print("tMN")
  print(tMN)
- pval<- pnorm(tMN,mean=0,sd=4,lower.tail=FALSE)
+ pval<- pnorm(tMN,mean=0,sd=2,lower.tail=FALSE)
  # 2 tail test against N(0,4)
  # H0 the data are white noise
  test<- pval*2

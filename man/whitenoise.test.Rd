@@ -1,29 +1,76 @@
 \name{whitenoise.test}
 \alias{whitenoise.test}
-\title{ Univariate Test for White Noise }
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{ ~~function to do ... ~~ }
 \description{
-  Performs a univariate test for white noise. The null is white noise rather than "strict" white noise which permits weak dependence in the higher moments of the variable}
-\usage{whitenoise.test(x)} 
-\arguments{ \item{x}{the input is a vector of length n (observations) or a n by 1 matrix}}
+  ~~ A concise (1-5 lines) description of what the function does. ~~
+}
+\usage{
+whitenoise.test(x)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{x}{ ~~Describe \code{x} here~~ }
+}
 \details{
-  A von Mises-type statistic is computed to be valued against a   N(0,4) distibution. Finite sample test statistics are thus easily generated. These can be requested from the author based on 5,000 replications. 
+  ~~ If necessary, more details than the description above ~~
 }
-\value{ A list with claas \code{htest} containing the following components:
-  \item{n}{no. of observations}
-  \item{T}{length of periodogram used}
-  \item{MN}{von Mises statistic}
-  \item{tMN}{test statistic}
-  \item{test value}{p-value for the test}}
-\references{ Lobato, I., and C. Velasco (2004). "A Simple and General Test for White Noise". Econometric Society, Latin-America Meetings, Paper No. 112}
-\author{ Peter Wickham }
-\note{ }
-\seealso{}
+\value{
+  ~Describe the value returned
+  If it is a LIST, use
+  \item{comp1 }{Description of 'comp1'}
+  \item{comp2 }{Description of 'comp2'}
+  ...
+}
+\references{ ~put references to the literature/web site here ~ }
+\author{ ~~who you are~~ }
+\note{ ~~further notes~~ 
+
+ ~Make other sections like Warning with \section{Warning }{....} ~
+}
+\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
 \examples{
+##---- Should be DIRECTLY executable !! ----
+##-- ==>  Define data, use random,
+##--	or do  help(data=index)  for the standard data sets.
+
+## The function is currently defined as
+function(x)
+ {
+ # This programme performs the Lobato-Velasco white noise test 
+ # Econometric Theory, Vol. 20, Issue 04, 2004
+ n<- length(x)
+ # compute acf function
+ gam<- acf(x,type="covariance")
+ # sample autocovariance at lag 0 is gam0
+ gam0<- gam$acf[1]
+ # compute periodogram of x
+ ILAM<- spec.pgram(x,taper=0,fast=FALSE)
+ ILAM<- ILAM$spec
+ T<- length(ILAM)
+ # compute CVM statistic MN
+ P2<- (T^(-1))*(sum(ILAM^2))
+ MN<- (P2/gam0^2)-1
+ # compute test statistic tMN
+ tMN<- sqrt(T)*(MN-1)
+ print("no. of observations")
+ print(n)
+ print("T")
+ print(T)
+ print("CVM stat MN")
+ print(MN)
+ print("tMN")
+ print(tMN)
+ pval<- pnorm(tMN,mean=0,sd=2,lower.tail=FALSE)
+ # 2 tail test against N(0,4)
+ # H0 the data are white noise
+ test<- pval*2
+ if (test > 1) test<- 2-test
+ print("test value")
+ print(test)
+ }
 }
-
-
-
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{htest }
-\keyword{ }% __ONLY ONE__ keyword per line
+\keyword{ htest }
+
